@@ -8,5 +8,6 @@ A sample dropwizard project.
 ## Useful links
 
 * [Dropwizard documentation](http://flywaydb.org/documentation)
+* [Dropwizard getting started](http://www.dropwizard.io/getting-started.html)
 
 
