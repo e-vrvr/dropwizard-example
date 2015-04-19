@@ -9,5 +9,3 @@ A sample dropwizard project.
 
 * [Dropwizard documentation](http://flywaydb.org/documentation)
 * [Dropwizard getting started](http://www.dropwizard.io/getting-started.html)
-
-
