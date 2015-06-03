@@ -15,5 +15,5 @@
  */
 package be.rufer.playground.dropwizard;
 
-public class SampleClassTest {
+public class ExampleConfigurationTest {
 }
