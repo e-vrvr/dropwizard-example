@@ -10,7 +10,7 @@ To run the application perform the following steps.
 1. Checkout source code
 2. Run maven `clean install`
 3. Go to the project root directory
-4. Execute `java -jar target/dropwizard-example-0.0.1-SNAPSHOT.jar`
+4. Execute `java -jar target/dropwizard-example-0.0.1-SNAPSHOT.jar server example.yml`
 
 ### Endpoints
 
