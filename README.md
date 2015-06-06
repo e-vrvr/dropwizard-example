@@ -16,15 +16,15 @@ To run the application perform the following steps.
 
 **Example endpoint, which returns message with default name**
 
-http://localhost:8080/example
+[http://localhost:8080/example](http://localhost:8080/example)
 
 **Example endpoint, which returns message with name passed as query parameter**
 
-http://localhost:8080/example?name=me
+[http://localhost:8080/example?name=me](http://localhost:8080/example?name=me)
 
 **Operational tools**
 
-http://localhost:8081/
+[http://localhost:8081/](http://localhost:8081/)
 
 ## Useful links
 
