@@ -4,6 +4,17 @@
 
 A sample dropwizard project based on the [Dropwizard getting started](http://www.dropwizard.io/getting-started.html).
 
+## Run application
+
+### Endpoints
+Example endpoint, which returns message with default name
+http://localhost:8080/example
+
+Example endpoint, which returns message with name passed as query parameter
+http://localhost:8080/example?name=me
+
+Operational tools
+http://localhost:8081/
 
 ## Useful links
 

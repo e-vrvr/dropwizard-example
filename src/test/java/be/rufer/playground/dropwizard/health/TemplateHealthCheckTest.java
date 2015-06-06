@@ -13,7 +13,8 @@
  * See the License for the specific language governing permissions and
  * limitations under the License.
  */
-package be.rufer.playground.dropwizard;
+package be.rufer.playground.dropwizard.health;
 
-public class ExampleConfigurationTest {
+public class TemplateHealthCheckTest {
+
 }

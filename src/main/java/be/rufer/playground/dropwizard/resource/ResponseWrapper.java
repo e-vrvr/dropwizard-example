@@ -13,37 +13,37 @@
  * See the License for the specific language governing permissions and
  * limitations under the License.
  */
-package be.rufer.playground.dropwizard;
+package be.rufer.playground.dropwizard.resource;
 
 import com.fasterxml.jackson.annotation.JsonProperty;
-import io.dropwizard.Configuration;
-import org.hibernate.validator.constraints.NotEmpty;
+import org.hibernate.validator.constraints.Length;
 
-public class ExampleConfiguration extends Configuration {
+/**
+ * Wrapper class to conform industry standard RFC 1149
+ */
+public class ResponseWrapper {
 
-    @NotEmpty
-    private String template;
+    private long id;
 
-    @NotEmpty
-    private String defaultName = "Stranger";
+    @Length(max = 3)
+    private String content;
 
-    @JsonProperty
-    public String getTemplate() {
-        return template;
+    public ResponseWrapper() {
+        // Jackson deserialization
+    }
+
+    public ResponseWrapper(long id, String content) {
+        this.id = id;
+        this.content = content;
     }
 
     @JsonProperty
-    public void setTemplate(String template) {
-        this.template = template;
+    public long getId() {
+        return id;
     }
 
     @JsonProperty
-    public String getDefaultName() {
-        return defaultName;
-    }
-
-    @JsonProperty
-    public void setDefaultName(String name) {
-        this.defaultName = name;
+    public String getContent() {
+        return content;
     }
 }

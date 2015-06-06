@@ -1,2 +1,2 @@
-template: Hello, %s!
+messageTemplate: I'm a dropwizard example resource requested by %s!
 defaultName: Stranger
