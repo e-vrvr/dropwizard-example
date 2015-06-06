@@ -15,5 +15,30 @@
  */
 package be.rufer.playground.dropwizard.resource;
 
+import org.junit.Before;
+import org.junit.Test;
+
+import com.google.common.base.Optional;
+
+import static org.junit.Assert.assertEquals;
+
+
 public class ExampleResourceTest {
+
+    private ExampleResource exampleResource;
+
+    @Before
+    public void init() {
+        exampleResource = new ExampleResource("testtemplate %s", Optional.of("name").get());
+    }
+
+    @Test
+         public void getExampleWithEmptyOptionalReturnsResponsWrapperContainingTemplateWithDefaultValue() {
+        assertEquals("testtemplate name", exampleResource.getExample(Optional.absent()).getContent());
+    }
+
+    @Test
+    public void getExampleWithNameReturnsResponsWrapperContainingTemplateWithGivenName() {
+        assertEquals("testtemplate user", exampleResource.getExample(Optional.of("user")).getContent());
+    }
 }

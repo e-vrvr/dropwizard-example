@@ -15,6 +15,25 @@
  */
 package be.rufer.playground.dropwizard.health;
 
+import com.codahale.metrics.health.HealthCheck;
+import org.junit.Before;
+import org.junit.Test;
+
+import static org.junit.Assert.assertEquals;
+
 public class TemplateHealthCheckTest {
 
+    private TemplateHealthCheck templateHealthCheck;
+
+    @Test
+    public void checkReturnsHealthyResultForValidTemplate() throws Exception {
+        templateHealthCheck = new TemplateHealthCheck("a tempalte %s");
+        assertEquals(HealthCheck.Result.healthy(), templateHealthCheck.check());
+    }
+
+    @Test
+    public void checkReturnsUnhealthyResultForInvalidTemplate() throws Exception {
+        templateHealthCheck = new TemplateHealthCheck("another template");
+        assertEquals(HealthCheck.Result.unhealthy("template doesn't include a name"), templateHealthCheck.check());
+    }
 }
