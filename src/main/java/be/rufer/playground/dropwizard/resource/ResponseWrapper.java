@@ -19,22 +19,22 @@ import com.fasterxml.jackson.annotation.JsonProperty;
 import org.hibernate.validator.constraints.Length;
 
 /**
- * Wrapper class to conform industry standard RFC 1149
+ * Wrapper class for all REST responses
  */
 public class ResponseWrapper {
 
     private long id;
 
     @Length(max = 3)
-    private String content;
+    private String data;
 
     public ResponseWrapper() {
         // Jackson deserialization
     }
 
-    public ResponseWrapper(long id, String content) {
+    public ResponseWrapper(long id, String data) {
         this.id = id;
-        this.content = content;
+        this.data = data;
     }
 
     @JsonProperty
@@ -43,7 +43,7 @@ public class ResponseWrapper {
     }
 
     @JsonProperty
-    public String getContent() {
-        return content;
+    public String getData() {
+        return data;
     }
 }

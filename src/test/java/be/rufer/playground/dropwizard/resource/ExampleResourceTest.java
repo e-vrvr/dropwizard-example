@@ -34,11 +34,11 @@ public class ExampleResourceTest {
 
     @Test
          public void getExampleWithEmptyOptionalReturnsResponsWrapperContainingTemplateWithDefaultValue() {
-        assertEquals("testtemplate name", exampleResource.getExample(Optional.absent()).getContent());
+        assertEquals("testtemplate name", exampleResource.getExample(Optional.absent()).getData());
     }
 
     @Test
     public void getExampleWithNameReturnsResponsWrapperContainingTemplateWithGivenName() {
-        assertEquals("testtemplate user", exampleResource.getExample(Optional.of("user")).getContent());
+        assertEquals("testtemplate user", exampleResource.getExample(Optional.of("user")).getData());
     }
 }
