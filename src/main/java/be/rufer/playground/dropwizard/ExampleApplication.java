@@ -18,9 +18,29 @@ package be.rufer.playground.dropwizard;
 import be.rufer.playground.dropwizard.config.ApplicationConfiguration;
 import be.rufer.playground.dropwizard.health.TemplateHealthCheck;
 import be.rufer.playground.dropwizard.resource.ExampleResource;
+import com.codahale.metrics.CachedGauge;
+import com.codahale.metrics.MetricRegistry;
+import com.codahale.metrics.ScheduledReporter;
+import com.codahale.metrics.health.HealthCheckRegistry;
+import com.codahale.metrics.jvm.GarbageCollectorMetricSet;
+import com.codahale.metrics.jvm.MemoryUsageGaugeSet;
+import com.codahale.metrics.jvm.ThreadStatesGaugeSet;
+import com.codahale.metrics.servlets.MetricsServlet;
+import com.izettle.metrics.dw.InfluxDbReporterFactory;
+import com.izettle.metrics.dw.SenderType;
 import io.dropwizard.Application;
 import io.dropwizard.setup.Bootstrap;
 import io.dropwizard.setup.Environment;
+import org.apache.commons.lang3.RandomUtils;
+import org.eclipse.jetty.servlet.ServletHolder;
+
+import javax.servlet.Servlet;
+import java.util.Random;
+import java.util.concurrent.TimeUnit;
+
+import static com.codahale.metrics.MetricRegistry.name;
+import static java.lang.Long.valueOf;
+import static java.util.concurrent.TimeUnit.MINUTES;
 
 public class ExampleApplication extends Application<ApplicationConfiguration> {
 
@@ -49,5 +69,45 @@ public class ExampleApplication extends Application<ApplicationConfiguration> {
         environment.healthChecks().register("template", healthCheck);
         environment.jersey().register(resource);
         environment.jersey().register(resource);
+
+        final MetricRegistry metricRegistry = environment.metrics();
+        final HealthCheckRegistry healthChecks = new HealthCheckRegistry();
+
+        metricRegistry.register("gc", new GarbageCollectorMetricSet());
+        metricRegistry.register("memory", new MemoryUsageGaugeSet());
+        metricRegistry.register("threads", new ThreadStatesGaugeSet());
+
+        Servlet metricsServlet = new MetricsServlet(metricRegistry);
+        ServletHolder holder = new ServletHolder(metricsServlet);
+        environment.getApplicationContext().getServletHandler().addServletWithMapping(holder, "/metrics");
+
+        metricRegistry.register(name(ExampleApplication.class, "total-offers-count"), new CachedGauge(10, MINUTES) {
+
+            protected Long loadValue() {
+                return RandomUtils.nextLong(50, 100);
+            }
+        });
+        metricRegistry.register(name(ExampleApplication.class, "active-offers-count"), new CachedGauge(10, MINUTES) {
+
+            protected Long loadValue() {
+                return RandomUtils.nextLong(200, 1000);
+            }
+        });
+        metricRegistry.register(name(ExampleApplication.class, "total-statuses-count"), new CachedGauge(10, MINUTES) {
+
+            protected Long loadValue() {
+                return RandomUtils.nextLong(10, 40);
+            }
+        });
+
+        InfluxDbReporterFactory influxDbReporterFactory = new InfluxDbReporterFactory();
+        influxDbReporterFactory.setDatabase("metrics");
+        influxDbReporterFactory.setHost("173.44.45.49");
+        influxDbReporterFactory.setPort(8086);
+        influxDbReporterFactory.setSenderType(SenderType.HTTP);
+
+
+        ScheduledReporter reporter = influxDbReporterFactory.build(metricRegistry);
+        reporter.start(10, TimeUnit.SECONDS);
     }
 }
