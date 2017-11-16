@@ -68,10 +68,8 @@ public class ExampleApplication extends Application<ApplicationConfiguration> {
                 new TemplateHealthCheck(configuration.getMessageTemplate());
         environment.healthChecks().register("template", healthCheck);
         environment.jersey().register(resource);
-        environment.jersey().register(resource);
 
-        final MetricRegistry metricRegistry = environment.metrics();
-        final HealthCheckRegistry healthChecks = new HealthCheckRegistry();
+        MetricRegistry metricRegistry = environment.metrics();
 
         metricRegistry.register("gc", new GarbageCollectorMetricSet());
         metricRegistry.register("memory", new MemoryUsageGaugeSet());

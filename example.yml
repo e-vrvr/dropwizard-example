@@ -1,25 +1,2 @@
 messageTemplate: I'm a dropwizard example resource requested by %s!
 defaultName: Stranger
-
-metrics:
-  reporters:
-    - type: influxdb
-      protocol: http
-      host: 173.44.45.49
-      port: 8086
-      database: metrics
-#      auth: myuser:mypassword
-      tags:
-        host: dev
-      precision: 1m # only store time precision to the minute
-      frequency: 1m
-      groupGauges: yes
-      excludes:
-        - ch.qos.logback.core.Appender.debug
-        - ch.qos.logback.core.Appender.trace
-        - io.dropwizard.jetty.MutableServletContextHandler.percent-4xx-15m
-        - io.dropwizard.jetty.MutableServletContextHandler.percent-4xx-1m
-        - io.dropwizard.jetty.MutableServletContextHandler.percent-4xx-5m
-        - io.dropwizard.jetty.MutableServletContextHandler.percent-5xx-15m
-        - io.dropwizard.jetty.MutableServletContextHandler.percent-5xx-1m
-        - io.dropwizard.jetty.MutableServletContextHandler.percent-5xx-5m
